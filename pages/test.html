@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>EveriToken</title>
+    <script src="../dist/evt.min.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+</head>
+
+<body>
+    test
+    <script>
+
+        async function main() {
+
+            // generate a pair of keys
+            //let key = await EVT.EvtKey.randomPrivateKey();
+
+            let key = "5JK4Js4Aof6yyRwqadMqdyd4bCa8wS17DKmjRQ9wippAGAPVn1p"
+            let publicKey = EVT.EvtKey.privateToPublic(key);
+
+            // set network endpoint
+            const network = {
+                host: 'testnet1.everitoken.io', // For everiToken TestNet (See all the networks on https://www.everitoken.io/networks)
+                port: 8888,                     // defaults to 8888
+                protocol: 'http'               // the TestNet of everiToken uses http and the MainNet uses https
+            };
+
+            // get APICaller instance
+            const apiCaller = EVT({
+                // keyProvider should be string of private key (aka. wit, can generate from everiSigner)
+                // you can also pass a function that return that string (or even Promise<string> for a async function)
+                endpoint: network,
+                keyProvider: [key] // The private key provider. Here we use the private key directly. You can also pass indirect value to increse security. See below.
+            });
+
+            // call API
+            var response = await apiCaller.getInfo();
+            let balances = await apiCaller.getFungibleBalance(publicKey);
+
+
+            console.log(balances)
+
+        };
+
+
+        main();
+
+
+    </script>
+
+</body>
+
+</html>
