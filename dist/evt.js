@@ -77,6 +77,7 @@ var EvtAction = function () {
         value: function () {
             var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
                 var ret;
+
                 return _regenerator2.default.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
@@ -99,7 +100,6 @@ var EvtAction = function () {
                                 return _promise2.default.resolve(domainKeyMappers[this.actionName]({ action: this.actionName, args: this.abi }, ret));
 
                             case 6:
-
                                 this.domain = ret.domain;
                                 this.key = ret.key;
 

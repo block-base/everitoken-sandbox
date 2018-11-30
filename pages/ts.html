@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>EveriToken</title>
-    <script src="../dist/evt.min.js" crossorigin="anonymous"></script>
+    <script src="../dist/evt.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 </head>
@@ -15,10 +15,10 @@
         async function main() {
 
             // generate a pair of keys
-            //let key = await EVT.EvtKey.randomPrivateKey();
+            //var key = await EVT.EvtKey.randomPrivateKey();
 
-            let key = "5JK4Js4Aof6yyRwqadMqdyd4bCa8wS17DKmjRQ9wippAGAPVn1p"
-            let publicKey = EVT.EvtKey.privateToPublic(key);
+            var key = "5JK4Js4Aof6yyRwqadMqdyd4bCa8wS17DKmjRQ9wippAGAPVn1p"
+            var publicKey = EVT.EvtKey.privateToPublic(key);
 
             // set network endpoint
             const network = {
@@ -37,12 +37,14 @@
 
             // call API
             var response = await apiCaller.getInfo();
-            let balances = await apiCaller.getFungibleBalance(publicKey);
+            var balances = await apiCaller.getFungibleBalance(publicKey);
 
 
-            /*
+
+            //Sending evt token to others
             // transfer fungible tokens to others
-            let trx = await apiCaller.pushTransaction(
+            /*
+            var trx = await apiCaller.pushTransaction(
                 { maxCharge: 100000 },   // limit of the transaction fee
                 new EVT.EvtAction("transferft", {
                     "from": publicKey, // sender
@@ -51,11 +53,116 @@
                     "memo": "Test" // Comment or extra data
                 })
             );
+
             */
 
-            console.log(balances)
+            /*
+            //Create Domain
+            var tx = await apiCaller.pushTransaction(
+                { maxCharge: 10000, payer: publicKey },
+                new EVT.EvtAction("newdomain", {
+                    "name": 'ookimaki',
+                    "creator": publicKey,
+                    "issue": {
+                        "name": "issue",
+                        "threshold": 1,
+                        "authorizers": [{
+                            "ref": "[A] " + publicKey,
+                            "weight": 1
+                        }]
+                    },
+                    "transfer": {
+                        "name": "transfer",
+                        "threshold": 1,
+                        "authorizers": [{
+                            "ref": "[G] .OWNER",
+                            "weight": 1
+                        }]
+                    },
+                    "manage": {
+                        "name": "manage",
+                        "threshold": 1,
+                        "authorizers": [{
+                            "ref": "[A] " + publicKey,
+                            "weight": 1
+                        }]
+                    }
+                })
+            );
             
+            console.log(tx)
 
+            */
+
+            var createdDomains = await apiCaller.getCreatedDomains(publicKey);
+            console.log(createdDomains)
+
+
+            //Issue NF token
+            /*
+            var tx = await apiCaller.pushTransaction(
+                { maxCharge: 10000, payer: publicKey },
+                new EVT.EvtAction("issuetoken", {
+                    "domain": 'ookimaki',
+                    "names": [
+                        'test' + "1",
+                        'test' + "2",
+                        'test' + "3"
+                    ],
+                    "owner": [
+                        publicKey
+                    ]
+                })
+            );
+
+            console.log(tx)
+            */
+
+            //Token creation
+            var ownedTokens = await apiCaller.getOwnedTokens(publicKey);
+            console.log(ownedTokens)
+
+
+            var token = await apiCaller.getToken('ookimaki', 'test1');
+            console.log(token)
+            
+            /*
+            var trx = await apiCaller.pushTransaction(
+                { maxCharge: 100000 },   // limit of the transaction fee
+                new EVT.EvtAction(
+                    "transfer",
+                    {
+                        "domain" : "ookimaki",
+                        "name" : "test1",
+                        "to": ["EVT5njgUbTechpraAophweRKMhjPMcPqV9csjwKxQkaNquAHA3G9F"], // receiver
+                        "memo": "test"
+                    },
+                    'ookimaki',
+                    'test1'
+                ));
+
+            console.log(trx)
+
+            */
+
+            /*
+
+
+
+            let newTrxId = (await apiCaller.pushTransaction(
+                new EVT.EvtAction("newfungible", {
+                    name: 'ABC',
+                    sym_name: 'abc',
+                    sym: "5, S#3",
+                    creator: publicKey,
+                    manage: { name: "manage", threshold: 1, authorizers: [{ ref: "[A] " + publicKey, weight: 1 }] },
+                    issue: { name: "issue", threshold: 1, authorizers: [{ ref: "[A] " + publicKey, weight: 1 }] },
+                    total_supply: "100.00000 S#3"
+                })
+            )).transactionId;
+
+            console.log(newTrxId) 
+            */
         };
 
 

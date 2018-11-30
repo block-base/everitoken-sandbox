@@ -6,7 +6,11 @@ https://www.everitoken.io/developers/apis,_sdks_and_tools/javascript_sdk_referen
 Already have browser code
 dist/evt.min.js
 
-I Do sandbox in pages/ts.html
+I do sandbox in pages/ts.html
+
+# API
+https://www.everitoken.io/developers/apis,_sdks_and_tools/api_reference#post-v1-chain-trx_json_to_digest
+
 
 
 # TestNet faucet
