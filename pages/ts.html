@@ -95,7 +95,7 @@
             */
 
             var createdDomains = await apiCaller.getCreatedDomains(publicKey);
-            console.log(createdDomains)
+            //console.log(createdDomains)
 
 
             //Issue NF token
@@ -120,13 +120,16 @@
 
             //Token creation
             var ownedTokens = await apiCaller.getOwnedTokens(publicKey);
-            console.log(ownedTokens)
+            //console.log(ownedTokens)
 
 
             var token = await apiCaller.getToken('ookimaki', 'test1');
-            console.log(token)
-            
+            //console.log(token)
+
+
+
             /*
+            //Sending NFT
             var trx = await apiCaller.pushTransaction(
                 { maxCharge: 100000 },   // limit of the transaction fee
                 new EVT.EvtAction(
@@ -145,24 +148,57 @@
 
             */
 
-            /*
 
+            /* Fundible token
+            let symbol = "ookimaki";
+            let symbol_id = 555;
 
-
+            // pass EvtAction instance as a action
             let newTrxId = (await apiCaller.pushTransaction(
                 new EVT.EvtAction("newfungible", {
-                    name: 'ABC',
-                    sym_name: 'abc',
-                    sym: "5, S#3",
+                    name: symbol,
+                    sym_name: symbol,
+                    sym: "5,S#555",
                     creator: publicKey,
                     manage: { name: "manage", threshold: 1, authorizers: [{ ref: "[A] " + publicKey, weight: 1 }] },
                     issue: { name: "issue", threshold: 1, authorizers: [{ ref: "[A] " + publicKey, weight: 1 }] },
-                    total_supply: "100.00000 S#3"
+                    total_supply: "100000.00000 S#" + symbol_id
                 })
             )).transactionId;
+             
+            await apiCaller.pushTransaction(
+                new EVT.EvtAction("issuefungible", {
+                    address: publicKey,
+                    number: "1.00000 S#" + 555,
+                    memo: "initial issue"
+                })
+            );
 
-            console.log(newTrxId) 
-            */
+            id = 10002;
+
+            var token = await apiCaller.getFungibleSymbolDetail(555);
+            console.log(token)
+
+            //send
+            var trx = await apiCaller.pushTransaction(
+                { maxCharge: 100000 },   // limit of the transaction fee
+                new EVT.EvtAction("transferft", {
+                    "from": publicKey, // sender
+                    "to": "EVT5njgUbTechpraAophweRKMhjPMcPqV9csjwKxQkaNquAHA3G9F", // receiver
+                    "number": "0.10000 S#555", // S#1 means the No 1 fungible token (EVT token)
+                    "memo": "Test" // Comment or extra data
+                })
+            );
+
+        var balances = await apiCaller.getFungibleBalance("EVT5njgUbTechpraAophweRKMhjPMcPqV9csjwKxQkaNquAHA3G9F");
+        console.log(balances);
+
+*/
+
+
+
+
+
         };
 
 

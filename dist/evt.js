@@ -100,6 +100,7 @@ var EvtAction = function () {
                                 return _promise2.default.resolve(domainKeyMappers[this.actionName]({ action: this.actionName, args: this.abi }, ret));
 
                             case 6:
+                                console.log(ret)
                                 this.domain = ret.domain;
                                 this.key = ret.key;
 
