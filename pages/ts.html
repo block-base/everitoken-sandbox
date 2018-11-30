@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    test
+    test 2
     <script>
 
         async function main() {
@@ -40,7 +40,21 @@
             let balances = await apiCaller.getFungibleBalance(publicKey);
 
 
+            /*
+            // transfer fungible tokens to others
+            let trx = await apiCaller.pushTransaction(
+                { maxCharge: 100000 },   // limit of the transaction fee
+                new EVT.EvtAction("transferft", {
+                    "from": publicKey, // sender
+                    "to": "EVT5njgUbTechpraAophweRKMhjPMcPqV9csjwKxQkaNquAHA3G9F", // receiver
+                    "number": "10.00000 S#1", // S#1 means the No 1 fungible token (EVT token)
+                    "memo": "Test" // Comment or extra data
+                })
+            );
+            */
+
             console.log(balances)
+            
 
         };
 
